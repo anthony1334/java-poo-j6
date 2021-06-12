@@ -26,4 +26,13 @@ public class Recensement {
 	public void setVilles(List<Ville> villes) {
 		this.villes = villes;
 	}
+
+	@Override
+	public String toString() {
+		return "Recensement{" +
+				"villes=" + villes +
+				'}';
+	}
+
+
 }

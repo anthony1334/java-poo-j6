@@ -31,6 +31,8 @@ public class Ville implements EnsemblePop {
 	 * @param nom nom de la ville
 	 * @param population population totale
 	 */
+
+
 	public Ville(String codeRegion, String nomRegion, String codeDepartement, String codeVille, String nom,
 			int population) {
 		super();
@@ -38,13 +40,22 @@ public class Ville implements EnsemblePop {
 		this.nomRegion = nomRegion;
 		this.codeDepartement = codeDepartement;
 		this.codeVille = codeVille;
+
 		this.nom = nom;
 		this.population = population;
 	}
 
+
+
+	public Ville(String codeVille, String nom) {
+		this.codeVille=codeVille;
+		this.nom = nom;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Département n°" + codeDepartement + " - Ville : " + nom + " - " + population + " hab.";
+		return "Département n°" + codeDepartement + " - Ville : " + nom + " - " + population + " hab.\n";
 	}
 
 	/**
