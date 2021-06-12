@@ -56,6 +56,7 @@ public class RechercheRegionsPlusPeuplees extends MenuService {
 		List<Region> regions = new ArrayList<Region>();
 		regions.addAll(mapRegions.values());
 
+
 		// On créé un comparateur de Region pour trier la liste des régions dans l'ordre
 		// de populations décroissantes.
 		Collections.sort(regions, new EnsemblePopComparateur(false));

@@ -1,9 +1,6 @@
 package fr.diginamic.recensement.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
@@ -47,5 +44,8 @@ public class RechercheVillesPlusPeupleesRegion extends MenuService {
 		}
 
 	}
+
+
+
 
 }

@@ -28,7 +28,10 @@ public class Region implements EnsemblePop {
 		this.code = code;
 		this.nom = nom;
 	}
-	
+
+	public Region() {
+	}
+
 	/** Ajoute une ville
 	 * @param ville ville
 	 */
