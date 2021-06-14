@@ -174,6 +174,36 @@ public class VilleDao {
         return false;
     }
 
+    public void populationVille(Ville ville){
+        Connection connection=null;
+        String nom = ville.getNom();
+        if(ville.getNom().contains("'")){
+            nom= nom.replaceAll("'","'' ");
+        }
+        String requete = (" select population from villes where nom like'"+ nom +"'");
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
+
+
+
+            stat.executeUpdate(requete);
+
+        } catch (SQLException e) {
+            System.out.println(requete);
+            System.out.println(e.getMessage());
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }
 
 

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
+import fr.diginamic.recensement.entites.VilleDao;
 
 /**
  * Recherche et affichage de la population d'une ville
@@ -25,8 +26,11 @@ public class RecherchePopulationVilleService extends MenuService {
 			if (ville.getNom().equalsIgnoreCase(choix)
 					|| ville.getNom().toLowerCase().startsWith(choix.toLowerCase())) {
 				System.out.println(ville);
+				VilleDao villeDao =new VilleDao();
+				villeDao.populationVille(ville);
 			}
 		}
+
 	}
 
 }
