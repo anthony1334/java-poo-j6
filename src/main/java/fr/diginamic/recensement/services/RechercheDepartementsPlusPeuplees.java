@@ -21,35 +21,18 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheDepartementsPlusPeuplees extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter( Scanner scanner) {
 
 		System.out.println("Veuillez saisir un nombre de départements:");
 		String nbDeptsStr = scanner.nextLine();
 		int nbDepts = Integer.parseInt(nbDeptsStr);
 
-		List<Ville> villes = recensement.getVilles();
+
 		Map<String, Departement> mapDepts = new HashMap<>();
 
-		for (Ville ville : villes) {
 
-			Departement departement = mapDepts.get(ville.getCodeDepartement());
-			if (departement == null) {
-				departement = new Departement(ville.getCodeDepartement());
-				mapDepts.put(ville.getCodeDepartement(), departement);
-			}
-			departement.addVille(ville);
-		}
 
-		List<Departement> departements = new ArrayList<Departement>();
-		departements.addAll(mapDepts.values());
 
-		Collections.sort(departements, new EnsemblePopComparateur(false));
-
-		for (int i = 0; i < nbDepts; i++) {
-			Departement departement = departements.get(i);
-			System.out.println(
-					"Département " + departement.getCode() + " : " + departement.getPopulation() + " habitants.");
-		}
 
 	}
 

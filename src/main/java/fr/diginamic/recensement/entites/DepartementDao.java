@@ -177,7 +177,28 @@ public class DepartementDao {
         }
         return false;
     }
+    public void populationParDepartement(String dpt){
+        Connection connection=null;
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
 
+
+            stat.executeUpdate("select sum( population) from departements inner join villes on villes.code_departement = departements.code_departement where departements.code_departement = '"+dpt+"'");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 }
 
 

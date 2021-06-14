@@ -16,7 +16,7 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheVillesPlusPeupleesRegion extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter( Scanner scanner) {
 
 		System.out.println("Veuillez saisir un nom de région:");
 		String nomRegion = scanner.nextLine();
@@ -25,23 +25,7 @@ public class RechercheVillesPlusPeupleesRegion extends MenuService {
 		String nbVillesStr = scanner.nextLine();
 		int nbVilles = Integer.parseInt(nbVillesStr);
 
-		List<Ville> villesRegions = new ArrayList<Ville>();
 
-		List<Ville> villes = recensement.getVilles();
-		for (Ville ville : villes) {
-			if (ville.getNomRegion().toLowerCase().startsWith(nomRegion.toLowerCase())) {
-				villesRegions.add(ville);
-			}
-		}
-
-		Collections.sort(villesRegions, new EnsemblePopComparateur(false));
-		System.out.println("Les " + nbVilles + " villes les plus peuplées de la région " + nomRegion + " sont :");
-		if (villesRegions.size() > 0) {
-			for (int i = 0; i < nbVilles; i++) {
-				Ville ville = villesRegions.get(i);
-				System.out.println(ville.getNom() + " : " + ville.getPopulation() + " habitants.");
-			}
-		}
 
 	}
 

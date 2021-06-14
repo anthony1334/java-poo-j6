@@ -16,20 +16,12 @@ import fr.diginamic.recensement.entites.VilleDao;
 public class RecherchePopulationVilleService extends MenuService {
 
 	@Override
-	public void traiter(Recensement rec, Scanner scanner) {
+	public void traiter( Scanner scanner) {
 
 		System.out.println("Quel est le nom de la ville recherchée ? ");
 		String choix = scanner.nextLine();
 
-		List<Ville> villes = rec.getVilles();
-		for (Ville ville : villes) {
-			if (ville.getNom().equalsIgnoreCase(choix)
-					|| ville.getNom().toLowerCase().startsWith(choix.toLowerCase())) {
-				System.out.println(ville);
-				VilleDao villeDao =new VilleDao();
-				villeDao.populationVille(ville);
-			}
-		}
+
 
 	}
 

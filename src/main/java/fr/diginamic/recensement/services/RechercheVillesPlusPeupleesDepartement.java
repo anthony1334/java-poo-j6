@@ -19,7 +19,7 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheVillesPlusPeupleesDepartement extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter( Scanner scanner) {
 
 		System.out.println("Veuillez saisir un numéro de département:");
 		String nomDept = scanner.nextLine();
@@ -28,24 +28,7 @@ public class RechercheVillesPlusPeupleesDepartement extends MenuService {
 		String nbVillesStr = scanner.nextLine();
 		int nbVilles = Integer.parseInt(nbVillesStr);
 
-		List<Ville> villesDept = new ArrayList<Ville>();
 
-		List<Ville> villes = recensement.getVilles();
-		for (Ville ville : villes) {
-			if (ville.getCodeDepartement().equalsIgnoreCase(nomDept)) {
-				villesDept.add(ville);
-			}
-		}
-
-		Collections.sort(villesDept, new EnsemblePopComparateur(false));
-
-		if (villesDept.size() > 0) {
-			System.out.println("Les " + nbVilles + " villes les plus peuplées du département " + nomDept + " :");
-			for (int i = 0; i < nbVilles; i++) {
-				Ville ville = villesDept.get(i);
-				System.out.println(ville.getNom() + " : " + ville.getPopulation() + " habitants.");
-			}
-		} 
 	}
 
 }

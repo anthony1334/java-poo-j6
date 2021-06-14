@@ -17,7 +17,7 @@ import fr.diginamic.recensement.entites.Ville;
 public class RecherchePopulationBorneService extends MenuService {
 
 	@Override
-	public void traiter(Recensement rec, Scanner scanner) {
+	public void traiter( Scanner scanner) {
 
 		System.out.println("Quel est le code du département recherché ? ");
 		String choix = scanner.nextLine();
@@ -31,14 +31,7 @@ public class RecherchePopulationBorneService extends MenuService {
 		int min = Integer.parseInt(saisieMin) * 1000;
 		int max = Integer.parseInt(saisieMax) * 1000;
 		
-		List<Ville> villes = rec.getVilles();
-		for (Ville ville : villes) {
-			if (ville.getCodeDepartement().equalsIgnoreCase(choix)) {
-				if (ville.getPopulation() >= min && ville.getPopulation() <= max) {
-					System.out.println(ville);
-				}
-			}
-		}
+
 	}
 
 }
