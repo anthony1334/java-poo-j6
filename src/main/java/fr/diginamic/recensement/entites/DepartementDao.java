@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import fr.diginamic.recensement.entites.Ville;
 
 public class DepartementDao {
 
@@ -206,6 +207,59 @@ public class DepartementDao {
             }
         }
         return population;
+    }
+
+    /**
+     *
+     * @param  String dpt numéro du département
+     * @param int nombre nombre de ville voulues
+     * @return List<Ville>
+     */
+
+    public List<Ville>  top10VilleParDepartement(String dpt, int nombre){
+        Connection connection=null;
+        String villeMax = null;
+        String requete =(" select villes.* from departements inner join villes on villes.code_departement= departements.code_departement where departements.code_departement = '"+ dpt  + "' order by population desc limit "+ nombre );
+        ArrayList<Ville> listeVille = new ArrayList<Ville>();
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
+
+
+
+
+
+
+            ResultSet rs = stat.executeQuery(requete);
+
+            while(rs.next()){
+                listeVille.add(new Ville(
+                        rs.getString("code_region"),
+                        rs.getString("code_departement"),
+                        rs.getString("code_commune"),
+                        rs.getString("nom"),
+                        rs.getInt("population")
+
+                    )
+                );
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(requete);
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return listeVille;
     }
 
 }

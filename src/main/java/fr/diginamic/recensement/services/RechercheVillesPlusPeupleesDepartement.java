@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.diginamic.recensement.entites.DepartementDao;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
@@ -27,6 +28,13 @@ public class RechercheVillesPlusPeupleesDepartement extends MenuService {
 		System.out.println("Veuillez saisir un nombre de villes:");
 		String nbVillesStr = scanner.nextLine();
 		int nbVilles = Integer.parseInt(nbVillesStr);
+
+		DepartementDao departementDao = new DepartementDao();
+		List<Ville> villes = departementDao.top10VilleParDepartement(nomDept,nbVilles);
+		for (Ville ville : villes) {
+			System.out.println( "Les " + nbVilles +" plus grandes villes du departement " + nomDept + " sont " + ville.getNom()+" avec " + ville.getPopulation() + " habitants ");
+		}
+	
 
 
 	}

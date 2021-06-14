@@ -36,6 +36,7 @@ public class Departement implements EnsemblePop {
 	}
 
 
+
 	/** Ajoute une ville
 	 * @param ville ville
 	 */

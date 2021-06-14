@@ -48,7 +48,13 @@ public class Ville implements EnsemblePop {
 		this.population = population;
 	}
 
-
+	public Ville(String codeRegion, String codeDepartement, String codeVille, String nom, int population) {
+		this.codeRegion = codeRegion;
+		this.codeDepartement = codeDepartement;
+		this.codeVille = codeVille;
+		this.nom = nom;
+		this.population = population;
+	}
 
 	public Ville(String codeVille, String nom) {
 		this.codeVille=codeVille;
