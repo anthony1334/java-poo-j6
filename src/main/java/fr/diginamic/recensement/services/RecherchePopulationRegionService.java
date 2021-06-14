@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
+import fr.diginamic.recensement.entites.RegionDao;
 import fr.diginamic.recensement.entites.Ville;
 
 /**
@@ -19,6 +20,10 @@ public class RecherchePopulationRegionService extends MenuService {
 
 		System.out.println("Quel est le nom (ou le début de nom) de la région recherchée ? ");
 		String choix = scanner.nextLine();
+
+		RegionDao regionDao = new RegionDao();
+		int population = regionDao.populationParRegion(choix);
+		System.out.println("La population de la région " + choix + " et de : " +population);
 
 
 	}

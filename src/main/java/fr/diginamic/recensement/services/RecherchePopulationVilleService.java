@@ -20,6 +20,9 @@ public class RecherchePopulationVilleService extends MenuService {
 
 		System.out.println("Quel est le nom de la ville recherchée ? ");
 		String choix = scanner.nextLine();
+		VilleDao villeDao = new VilleDao();
+		int population = villeDao.populationVille(choix);
+		System.out.println("la population de " + choix + " est de " + population);
 
 
 

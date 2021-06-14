@@ -174,7 +174,39 @@ public class RegionDao {
         return false;
     }
 
+        public int populationParRegion(String region){
+            Connection connection=null;
+            int population =0;
+            try {
+                DriverManager.registerDriver(new Driver());
+                connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+                System.out.println(connection);
+                Statement stat = connection.createStatement();
+
+
+                String requete =("select sum( population) as population from regions inner join villes on villes.code_region= regions.code_region where regions.code_region = " + region);
+
+
+
+                ResultSet rs = stat.executeQuery(requete);
+                rs.next();
+                population = rs.getInt("population");
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            return population;
+        }
     }
+
+
 
 
 

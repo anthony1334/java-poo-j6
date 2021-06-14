@@ -177,8 +177,9 @@ public class DepartementDao {
         }
         return false;
     }
-    public void populationParDepartement(String dpt){
+    public int populationParDepartement(String dpt){
         Connection connection=null;
+        int population =0;
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
@@ -186,7 +187,13 @@ public class DepartementDao {
             Statement stat = connection.createStatement();
 
 
-            stat.executeUpdate("select sum( population) from departements inner join villes on villes.code_departement = departements.code_departement where departements.code_departement = '"+dpt+"'");
+           String requete =("select sum( population) as population from departements inner join villes on villes.code_departement = departements.code_departement where departements.code_departement = '"+dpt+"'");
+
+
+
+            ResultSet rs = stat.executeQuery(requete);
+            rs.next();
+            population = rs.getInt("population");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -198,7 +205,9 @@ public class DepartementDao {
                 System.out.println(e.getMessage());
             }
         }
+        return population;
     }
+
 }
 
 

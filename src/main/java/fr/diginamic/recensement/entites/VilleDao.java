@@ -174,13 +174,14 @@ public class VilleDao {
         return false;
     }
 
-    public void populationVille(Ville ville){
+    public int populationVille(String ville){
         Connection connection=null;
-        String nom = ville.getNom();
-        if(ville.getNom().contains("'")){
-            nom= nom.replaceAll("'","'' ");
+        int population=0;
+
+        if(ville.contains("'")){
+            ville= ville.replaceAll("'","'' ");
         }
-        String requete = (" select population from villes where nom like'"+ nom +"'");
+        String requete = (" select population from villes where nom like'"+ ville +"'");
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
@@ -189,7 +190,13 @@ public class VilleDao {
 
 
 
-            stat.executeUpdate(requete);
+           ResultSet rs = stat.executeQuery(requete);
+         rs.next();
+             population = rs.getInt("population");
+
+
+
+
 
         } catch (SQLException e) {
             System.out.println(requete);
@@ -202,7 +209,9 @@ public class VilleDao {
                 System.out.println(e.getMessage());
             }
         }
+        return population;
     }
+
 
 }
 

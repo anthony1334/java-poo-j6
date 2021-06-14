@@ -18,6 +18,9 @@ public class RecherchePopulationDepartementService extends MenuService {
 		
 		System.out.println("Quel est le code du département recherché ? ");
 		String choix = scanner.nextLine();
+		DepartementDao departementDao = new DepartementDao();
+		int population = departementDao.populationParDepartement(choix);
+		System.out.println("la population du departement " + choix + " est de :" + population + " habitants");
 		
 
 
