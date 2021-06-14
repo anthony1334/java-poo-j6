@@ -69,7 +69,7 @@ public class RegionDao {
                 if(region.getNom().contains("'")){
                     nom= nom.replaceAll("'","'' ");
                 }
-                stat.executeUpdate("INSERT INTO REGIONS (code_region, nom_region) VALUES ('"+ region.getCode()+"','"+ region.getNom()+"')");
+                stat.executeUpdate("INSERT INTO REGIONS (code_region, nom_region) VALUES ('"+ region.getCode()+"','"+ nom +"')");
 
             } catch (SQLException e) {
                 System.out.println(e.getMessage());

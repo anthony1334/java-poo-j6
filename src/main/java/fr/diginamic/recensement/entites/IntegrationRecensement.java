@@ -9,9 +9,10 @@ public class IntegrationRecensement {
         Recensement recensement = RecensementUtils.lire(filePath);
         RegionDao regionDao = new RegionDao();
         regionDao.insertRegion(recensement);
-
-
-
+        DepartementDao departementDao = new DepartementDao();
+        departementDao.insertDepartement(recensement);
+        VilleDao villeDao = new VilleDao();
+        villeDao.insertVille(recensement);
 
     }
 }

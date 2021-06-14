@@ -13,6 +13,10 @@ public class Departement implements EnsemblePop {
 	private String code;
 	/** population : int*/
 	private int population;
+	/** region : String*/
+	private String codeRegion;
+	/** nom : String*/
+	private String nom;
 	
 	/** villes : List<Ville>*/
 	private List<Ville> villes = new ArrayList<>();
@@ -24,7 +28,14 @@ public class Departement implements EnsemblePop {
 		super();
 		this.code = code;
 	}
-	
+
+	public Departement() {
+	}
+
+	public Departement(String id, String code) {
+	}
+
+
 	/** Ajoute une ville
 	 * @param ville ville
 	 */
@@ -58,5 +69,35 @@ public class Departement implements EnsemblePop {
 		this.population = population;
 	}
 
-	
+	/**
+	 *  Getter
+	 * @return the codeRegion
+	 */
+	public String getCodeRegion() {
+		return codeRegion;
+	}
+
+	/**
+	 * Setter
+	 * @param codeRegion
+	 */
+	public void setCodeRegion(String codeRegion) {
+		this.codeRegion = codeRegion;
+	}
+
+	/**
+	 * Getter
+	 * @return nom
+	 */
+	public String getNom() {
+		return nom;
+	}
+
+	/**
+	 * Setter
+	 * @param nom
+	 */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 }

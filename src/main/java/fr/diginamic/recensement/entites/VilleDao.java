@@ -4,6 +4,7 @@ import org.mariadb.jdbc.Driver;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -11,7 +12,6 @@ public class VilleDao {
         Connection connection=null;
         Statement stat = null;
         ResultSet curseur= null;
-
 
         public List<Ville> extraire(){
 
@@ -60,19 +60,23 @@ public class VilleDao {
         //Méthode qui insert une nouvelle ville
         public void insert(Ville ville){
             Connection connection=null;
+            String nom = ville.getNom();
+            if(ville.getNom().contains("'")){
+                nom= nom.replaceAll("'","'' ");
+            }
+            String requete = "INSERT INTO VILLES (code_commune, code_departement, code_region, nom, population) VALUES ('"+ ville.getCodeVille() +"','"+ ville.getCodeDepartement() +"','"+ ville.getCodeRegion() +"','"+ nom +"','"+ville.getPopulation() +"')";
             try {
                 DriverManager.registerDriver(new Driver());
                 connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
                 System.out.println(connection);
                 Statement stat = connection.createStatement();
 
-                String nom = ville.getNom();
-                /*if(ville.getNom().contains("'")){
-                    nom= nom.replaceAll("'","'' ");
-                }*/
-                stat.executeUpdate("INSERT INTO VILLES (code_commune, code_departement, code_region, nom) VALUES ('"+ ville.getCodeVille() +"','"+ ville.getCodeDepartement()+"','"+ville.getCodeRegion()+"','"+ville.getNom()+"')");
+
+
+                stat.executeUpdate(requete);
 
             } catch (SQLException e) {
+                System.out.println(requete);
                 System.out.println(e.getMessage());
             }
             finally {
@@ -84,6 +88,7 @@ public class VilleDao {
             }
         }
 
+        //Permet de faire une mise  à jour dans la table ville
         public int update(String ancienNom, String nouveauNom){
             Connection connection=null;
             Statement stat = null;
@@ -110,6 +115,8 @@ public class VilleDao {
             }
             return nb ;
         }
+
+        // Permet de supprimer une ville
 
         public boolean delete(Ville ville){
 
@@ -138,6 +145,35 @@ public class VilleDao {
             return true;
         }
 
+    /**
+     *
+     * @param recensement
+     * @return liste ville
+     */
+
+    public int insertVille(Recensement recensement){
+        List<Ville> villes = recensement.getVilles();
+        for (Ville ville : recensement.getVilles()) {
+
+            this.insert(ville);
+
+        }
+
+        System.out.println(villes.size());
+
+
+        return villes.size();
     }
+
+    private Boolean hasVille(String code, HashSet <Ville> villes){
+        for (Ville ville : villes) {
+            if(code.equals(ville.getCodeVille()) ){
+                return true;
+            }
+        }
+        return false;
+    }
+
+}
 
 

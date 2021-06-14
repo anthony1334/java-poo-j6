@@ -21,6 +21,9 @@ public class Ville implements EnsemblePop {
 	/** population totale */
 	private int population;
 
+	public Ville() {
+	}
+
 	/**
 	 * Constructeur
 	 * 
