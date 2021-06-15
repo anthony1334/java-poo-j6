@@ -11,9 +11,11 @@ public class RegionDao {
         Statement stat = null;
         ResultSet curseur= null;
 
-
+    /**
+     *
+     * @return null
+     */
         public List<Region> extraire(){
-
 
             try {
                 DriverManager.registerDriver(new Driver());
@@ -56,7 +58,12 @@ public class RegionDao {
         }
 
 
-        //Méthode qui insert une nouvelle ville
+
+
+    /**
+     * Insert une nouvelle ville
+     * @param region
+     */
         public void insert(Region region){
             Connection connection=null;
             try {
@@ -83,6 +90,12 @@ public class RegionDao {
             }
         }
 
+    /**
+     * Permet de modifier le nom d'une région
+     * @param ancienNom
+     * @param nouveauNom
+     * @return int
+     */
         public int update(String ancienNom, String nouveauNom){
             Connection connection=null;
             Statement stat = null;
@@ -174,6 +187,12 @@ public class RegionDao {
         return false;
     }
 
+    /**
+     * retourne la population d'une région donnée
+     * @param region
+     * @return population
+     */
+
         public int populationParRegion(String region){
             Connection connection=null;
             int population =0;
@@ -204,6 +223,58 @@ public class RegionDao {
             }
             return population;
         }
+
+    /**
+     * Retourne les N plus grandes villes d'une région donnée
+     * @param region
+     * @param nombre
+     * @return List<Ville>
+     */
+
+    public List<Ville>  top10VilleParRegion(String region, int nombre){
+        Connection connection=null;
+        String requete =(" select villes.* from regions inner join villes on villes.code_region= regions.code_region where regions.code_region = '"+ region  + "' order by population desc limit "+ nombre );
+        ArrayList<Ville> listeVille = new ArrayList<Ville>();
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
+
+
+
+
+
+
+            ResultSet rs = stat.executeQuery(requete);
+
+            while(rs.next()){
+                listeVille.add(new Ville(
+                                rs.getString("code_region"),
+                                rs.getString("code_departement"),
+                                rs.getString("code_commune"),
+                                rs.getString("nom"),
+                                rs.getInt("population")
+
+                        )
+                );
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(requete);
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return listeVille;
+    }
     }
 
 

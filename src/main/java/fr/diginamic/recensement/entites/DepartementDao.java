@@ -218,7 +218,6 @@ public class DepartementDao {
 
     public List<Ville>  top10VilleParDepartement(String dpt, int nombre){
         Connection connection=null;
-        String villeMax = null;
         String requete =(" select villes.* from departements inner join villes on villes.code_departement= departements.code_departement where departements.code_departement = '"+ dpt  + "' order by population desc limit "+ nombre );
         ArrayList<Ville> listeVille = new ArrayList<Ville>();
         try {
@@ -226,11 +225,6 @@ public class DepartementDao {
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
             System.out.println(connection);
             Statement stat = connection.createStatement();
-
-
-
-
-
 
             ResultSet rs = stat.executeQuery(requete);
 
