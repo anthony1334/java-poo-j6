@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Region;
+import fr.diginamic.recensement.entites.RegionDao;
 import fr.diginamic.recensement.entites.Ville;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 
@@ -24,7 +25,15 @@ public class RechercheRegionsPlusPeuplees extends MenuService {
 	public void traiter( Scanner scanner) {
 
 		System.out.println("Veuillez saisir un nombre de régions:");
+
 		String nbRegionsStr = scanner.nextLine();
+		int nbRegions = Integer.parseInt(nbRegionsStr);
+		RegionDao regionDao = new RegionDao();
+		List<Region>topRegion = regionDao.topNRegion(nbRegions);
+		System.out.println("Les " + nbRegions + " plus grandes régions sont :");
+		for (Region region : topRegion) {
+			System.out.println(region.getNom()+": avec " + region.getPopulation()+ " habitants");
+		}
 
 	}
 

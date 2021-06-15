@@ -123,7 +123,13 @@ public class RegionDao {
             return nb ;
         }
 
-        public boolean delete(Region region){
+    /**
+     * Supprime une région
+     * @param region
+     * @return boolean
+     */
+
+    public boolean delete(Region region){
 
             Connection connection=null;
             Statement stat = null;
@@ -275,7 +281,53 @@ public class RegionDao {
         }
         return listeVille;
     }
+
+    /**
+     * Retourne les N plus grandes régions de France
+     * @param nombre
+     * @return List<Region>
+     */
+    public List<Region>  topNRegion( int nombre){
+        Connection connection=null;
+        String requete =("select sum( population) as population, regions.*\n"+
+        "from regions inner join villes on villes.code_region = regions.code_region\n"+
+       " group by regions.code_region\n"+
+        "order by population desc limit " + nombre);
+        ArrayList<Region> listeRegion = new ArrayList<Region>();
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
+
+            ResultSet rs = stat.executeQuery(requete);
+
+            while(rs.next()){
+                listeRegion.add(new Region(
+                                rs.getString("code_region"),
+                                rs.getString("nom_region"),
+                                rs.getInt("population")
+
+                        )
+                );
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(requete);
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return listeRegion;
     }
+}
 
 
 

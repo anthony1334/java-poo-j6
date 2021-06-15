@@ -32,6 +32,12 @@ public class Region implements EnsemblePop {
 	public Region() {
 	}
 
+	public Region(String code, String nom, int population) {
+		this.code = code;
+		this.nom = nom;
+		this.population = population;
+	}
+
 	/** Ajoute une ville
 	 * @param ville ville
 	 */
