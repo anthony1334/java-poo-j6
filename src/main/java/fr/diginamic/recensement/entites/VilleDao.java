@@ -13,8 +13,12 @@ public class VilleDao {
         Statement stat = null;
         ResultSet curseur= null;
 
-        public List<Ville> extraire(){
 
+    /**
+     * Recupere toute les villes
+     * @return List<Ville>
+     */
+    public List<Ville> extraire(){
 
             try {
                 DriverManager.registerDriver(new Driver());
@@ -57,8 +61,11 @@ public class VilleDao {
         }
 
 
-        //Méthode qui insert une nouvelle ville
-        public void insert(Ville ville){
+    /**
+     * Méthode qui insert une nouvelle ville
+     * @param ville
+     */
+    public void insert(Ville ville){
             Connection connection=null;
             String nom = ville.getNom();
             if(ville.getNom().contains("'")){
@@ -88,7 +95,12 @@ public class VilleDao {
             }
         }
 
-        //Permet de faire une mise  à jour dans la table ville
+    /**
+     *  Permet de faire une mise  à jour dans la table ville
+     * @param ancienNom
+     * @param nouveauNom
+     * @return int
+     */
         public int update(String ancienNom, String nouveauNom){
             Connection connection=null;
             Statement stat = null;
@@ -116,9 +128,13 @@ public class VilleDao {
             return nb ;
         }
 
-        // Permet de supprimer une ville
+    /**
+     *  Permet de supprimer une ville
+     * @param ville
+     * @return boolean
+     */
 
-        public boolean delete(Ville ville){
+    public boolean delete(Ville ville){
 
             Connection connection=null;
             Statement stat = null;
@@ -174,6 +190,12 @@ public class VilleDao {
         return false;
     }
 
+    /**
+     * Retourne la population d'une ville donnée
+     * @param ville
+     * @return int
+     */
+
     public int populationVille(String ville){
         Connection connection=null;
         int population=0;
@@ -210,6 +232,53 @@ public class VilleDao {
             }
         }
         return population;
+    }
+
+    /**
+     * Retourne les N plus grandes villes de france
+     * @param nombre
+     * @return List<Ville
+     */
+
+    public List<Ville>  topNVilleFrance( int nombre){
+        Connection connection=null;
+        String requete =(" select villes.* from villes order by  population desc limit " + nombre);
+        ArrayList<Ville> listeVille = new ArrayList<Ville>();
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
+
+
+            ResultSet rs = stat.executeQuery(requete);
+
+            while(rs.next()){
+                listeVille.add(new Ville(
+                                rs.getString("code_region"),
+                                rs.getString("code_departement"),
+                                rs.getString("code_commune"),
+                                rs.getString("nom"),
+                                rs.getInt("population")
+
+                        )
+                );
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(requete);
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return listeVille;
     }
 
 
