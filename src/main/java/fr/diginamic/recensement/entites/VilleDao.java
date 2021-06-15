@@ -200,19 +200,22 @@ public class VilleDao {
         Connection connection=null;
         int population=0;
 
-        if(ville.contains("'")){
+     /*   if(ville.contains("'")){
             ville= ville.replaceAll("'","'' ");
-        }
-        String requete = (" select population from villes where nom like'"+ ville +"'");
+        }*/
+        String requete = " select population from villes where nom like ?";
+
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            PreparedStatement selectVille = connection.prepareStatement(requete);
+            selectVille.setString(1,ville);
             System.out.println(connection);
-            Statement stat = connection.createStatement();
 
 
 
-           ResultSet rs = stat.executeQuery(requete);
+
+           ResultSet rs = selectVille.executeQuery();
          rs.next();
              population = rs.getInt("population");
 

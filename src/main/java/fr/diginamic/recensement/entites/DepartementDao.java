@@ -16,7 +16,10 @@ public class DepartementDao {
     Statement stat = null;
     ResultSet curseur= null;
 
-
+    /**
+     * Retourne la liste de tous les départements
+     * @return List<Departement>
+     */
     public List<Departement> extraire(){
 
 
@@ -61,7 +64,10 @@ public class DepartementDao {
     }
 
 
-    //Méthode qui insert une nouvelle ville
+    /**
+     *  Méthode qui insert une nouvelle ville
+     * @param departement
+     */
     public void insert(Departement departement){
         Connection connection=null;
         try {
@@ -85,6 +91,12 @@ public class DepartementDao {
         }
     }
 
+    /**
+     * retourne le nombre de lignes qui ont été modifiées
+     * @param ancienNom
+     * @param nouveauNom
+     * @return int
+     */
     public int update(String ancienNom, String nouveauNom){
         Connection connection=null;
         Statement stat = null;
@@ -112,6 +124,11 @@ public class DepartementDao {
         return nb ;
     }
 
+    /**
+     *
+     * @param departement
+     * @return boolean
+     */
     public boolean delete(Departement departement){
 
         Connection connection=null;
@@ -152,8 +169,6 @@ public class DepartementDao {
                 Departement departement = new Departement();
                 departement.setCode(ville.getCodeDepartement()) ;
                 departement.setCodeRegion(ville.getCodeRegion());
-
-
 
                 departements.add(departement);
                 System.out.println(departement.getCode());
