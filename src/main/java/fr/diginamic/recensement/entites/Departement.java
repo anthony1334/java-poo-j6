@@ -35,7 +35,10 @@ public class Departement implements EnsemblePop {
 	public Departement(String id, String code) {
 	}
 
-
+	public Departement(String code, int population) {
+		this.code = code;
+		this.population = population;
+	}
 
 	/** Ajoute une ville
 	 * @param ville ville

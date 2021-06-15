@@ -256,6 +256,53 @@ public class DepartementDao {
         return listeVille;
     }
 
+    /**
+     * Retourne les N plus grands départements de france
+     * @param nombre
+     * @return List<Departement>
+     */
+
+    public List<Departement>  topNDepartement( int nombre){
+        Connection connection=null;
+        String requete =("select sum( population) as population, departements.* from departements inner join villes on villes.code_departement = departements.code_departement\n" +
+                " group by departements.code_departement\n" +
+                "order by population desc limit "+ nombre);
+        ArrayList<Departement> listeDepartement = new ArrayList<Departement>();
+        try {
+            DriverManager.registerDriver(new Driver());
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+            System.out.println(connection);
+            Statement stat = connection.createStatement();
+
+            ResultSet rs = stat.executeQuery(requete);
+
+            while(rs.next()){
+                listeDepartement.add(new Departement(
+                                rs.getString("code_departement"),
+                                rs.getInt("population")
+
+                        )
+                );
+
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(requete);
+        }
+        finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return listeDepartement;
+    }
+
+
+
 }
 
 
