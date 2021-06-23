@@ -12,7 +12,14 @@ public class VilleDao {
         Connection connection=null;
         Statement stat = null;
         ResultSet curseur= null;
-
+ private void setConnection(){
+     try {
+         DriverManager.registerDriver(new Driver());
+         connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
+     } catch (SQLException e) {
+         System.out.println(e.getMessage());
+     }
+ }
 
     /**
      * Recupere toute les villes
@@ -197,7 +204,7 @@ public class VilleDao {
      */
 
     public int populationVille(String ville){
-        Connection connection=null;
+
         int population=0;
 
      /*   if(ville.contains("'")){
@@ -206,11 +213,10 @@ public class VilleDao {
         String requete = " select population from villes where nom like ?";
 
         try {
-            DriverManager.registerDriver(new Driver());
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/recensement", "root", "root");
-            PreparedStatement selectVille = connection.prepareStatement(requete);
+            setConnection();
+            PreparedStatement selectVille = this.connection.prepareStatement(requete);
             selectVille.setString(1,ville);
-            System.out.println(connection);
+            System.out.println(this.connection);
 
 
 
@@ -229,7 +235,7 @@ public class VilleDao {
         }
         finally {
             try {
-                connection.close();
+               this.connection.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
